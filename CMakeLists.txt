@@ -18,6 +18,21 @@ include_directories(/opt/ros/groovy/include/opencv2)
 
 include_directories(src)
 
+#include_directories(src/apps)
+include_directories(src/FeatureDescriptor)
+#include_directories(src/mygeometry)
+#include_directories(src/FeatureExtractor)
+#include_directories(src/RGBDSegmentation)
+include_directories(src/core)
+#include_directories(src/graphcutting)
+#include_directories(src/TransformationFilter)
+#include_directories(src/FrameMatcher)
+#include_directories(src/Map)
+#include_directories(src/g2otypes)
+
+add_library(aktest_frameinput src/core/FrameInput.cpp)
+target_link_libraries(aktest_frameinput ${OpenCV_LIBRARIES})
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES ekz-slam
