@@ -83,8 +83,8 @@ int main(int argc, char **argv)
 	m->segmentation 			= new RGBDSegmentation();
 	m->extractor 				= new SurfExtractor();
 
-	//string input = string(argv[1]);
-	string input = string("../new_data/johan-rec/");
+	string input = string(argv[1]);
+	//string input = string("../new_data/johan-rec/");
 
 	int missing = 0;
 	int i;
