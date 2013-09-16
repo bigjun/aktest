@@ -31,7 +31,7 @@ include_directories(src/Map)
 #include_directories(src/g2otypes)
 
 add_library(aktest_frameinput src/core/FrameInput.cpp)
-target_link_libraries(aktest_frameinput ${OpenCV_LIBRARIES})
+target_link_libraries(aktest_frameinput ${OpenCV_LIBRARIES} ${PCL_LIBRARIES})
 
 add_library(aktest_FeatureDescriptor src/FeatureDescriptor/FeatureDescriptor.cpp src/FeatureDescriptor/SurfFeatureDescriptor64.cpp src/FeatureDescriptor/FloatHistogramFeatureDescriptor.cpp)
 
@@ -62,7 +62,14 @@ target_link_libraries(aktest_FrameMatcher aktest_TransformationFilter)
 add_library(aktest_map3d src/Map/Map3D.cpp src/Map/Map3Dv2.cpp)
 target_link_libraries(aktest_map3d aktest_FrameMatcher)
 target_link_libraries(aktest_map3d ${libg2o_LIBRARIES})
+target_link_libraries(aktest_map3d g2o_cli g2o_core g2o_csparse_extension g2o_ext_freeglut_minimal g2o_incremental g2o_interactive g2o_interface g2o_opengl_helper g2o_parser g2o_simulator g2o_solver_cholmod g2o_solver_csparse g2o_solver_dense g2o_solver_pcg g2o_solver_slam2d_linear g2o_solver_structure_only g2o_stuff g2o_types_data g2o_types_icp g2o_types_sba g2o_types_sclam2d g2o_types_sim3 g2o_types_slam2d g2o_types_slam3d)
 
+add_executable(aktest_test4 src/test4.cpp)
+target_link_libraries(aktest_test4 ${OpenCV_LIBRARIES})
+target_link_libraries(aktest_test4 ${catkin_LIBRARIES})
+target_link_libraries(aktest_test4 ${PCL_LIBRARIES})
+target_link_libraries(aktest_test4 aktest_core)
+target_link_libraries(aktest_test4 aktest_map3d)
 
 catkin_package(
 #  INCLUDE_DIRS include

@@ -6,12 +6,31 @@
 
 using namespace std;
 
+bool comparison_Map3Dbase (Transformation * i,Transformation * j) {
+	if(i->src == j->src){return (i->weight<j->weight);}
+	else{return (i->src->id<j->src->id);}
+}
+
 Map3D::Map3D(){}
 Map3D::~Map3D(){}
-void Map3D::addFrame(FrameInput * fi) {}
-void Map3D::addFrame(RGBDFrame * frame){}
+void Map3D::addFrame(FrameInput * fi){addFrame(new RGBDFrame(fi,extractor,segmentation));}
+void Map3D::addFrame(RGBDFrame * frame){
+	printf("Map3Dbase::addFrame(RGBDFrame * frame)\n");
+	if(frames.size() > 0){transformations.push_back(matcher->getTransformation(frame, frames.back()));}
+	frames.push_back(frame);
+}
 void Map3D::addTransformation(Transformation * transformation){}
-void Map3D::estimate(){}
+void Map3D::estimate(){
+	printf("estimate\n");
+	sort(transformations.begin(),transformations.end(),comparison_Map3Dbase);
+	printf("sorted\n");
+	poses.push_back(Matrix4f::Identity());
+	for(int i = 0; i < transformations.size(); i++){
+		printf("id:%i ---------> %i <--> %i : %f\n",i,transformations.at(i)->src->id,transformations.at(i)->dst->id,transformations.at(i)->weight);
+		poses.push_back(poses.back()*transformations.at(i)->transformationMatrix);
+	}
+	printf("estimate done\n");
+}
 void Map3D::setVisualization(boost::shared_ptr<pcl::visualization::PCLVisualizer> view){viewer = view;}
 void Map3D::visualize(){}
 void Map3D::showTuning(){}
