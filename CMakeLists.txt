@@ -11,6 +11,13 @@ find_package(PCL 1.5 REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 
+link_directories(/opt/ros/groovy/lib)
+include_directories(/opt/ros/groovy/include/g2o/)
+include_directories(/opt/ros/groovy/include/opencv)
+include_directories(/opt/ros/groovy/include/opencv2)
+
+include_directories(src)
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES ekz-slam
