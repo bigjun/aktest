@@ -21,8 +21,8 @@ include_directories(src)
 #include_directories(src/apps)
 include_directories(src/FeatureDescriptor)
 include_directories(src/mygeometry)
-#include_directories(src/FeatureExtractor)
-#include_directories(src/RGBDSegmentation)
+include_directories(src/FeatureExtractor)
+include_directories(src/RGBDSegmentation)
 include_directories(src/core)
 #include_directories(src/graphcutting)
 #include_directories(src/TransformationFilter)
@@ -43,6 +43,9 @@ add_library(aktest_FeatureExtractor src/FeatureExtractor/FeatureExtractor.cpp sr
 target_link_libraries(aktest_FeatureExtractor aktest_mygeometry)
 target_link_libraries(aktest_FeatureExtractor ${PCL_LIBRARIES} ${OpenCV_LIBRARIES})
 target_link_libraries(aktest_FeatureExtractor opencv_calib3d opencv_core opencv_flann opencv_highgui opencv_legacy opencv_contrib opencv_features2d opencv_gpu  opencv_imgproc opencv_ml opencv_objdetect opencv_video)
+
+add_library(aktest_RGBDSegmentation src/RGBDSegmentation/RGBDSegmentation.cpp)
+target_link_libraries(aktest_RGBDSegmentation aktest_mygeometry)
 
 catkin_package(
 #  INCLUDE_DIRS include
