@@ -38,6 +38,12 @@ add_library(aktest_FeatureDescriptor src/FeatureDescriptor/FeatureDescriptor.cpp
 add_library(aktest_mygeometry src/mygeometry/HasDistance.cpp src/mygeometry/Point.cpp src/mygeometry/Line.cpp src/mygeometry/Plane.cpp src/mygeometry/PlaneChain.cpp src/mygeometry/KeyPoint.cpp src/mygeometry/KeyPointChain.cpp src/mygeometry/KeyPointSet.cpp)
 target_link_libraries(aktest_mygeometry aktest_FeatureDescriptor aktest_frameinput)
 
+
+add_library(aktest_FeatureExtractor src/FeatureExtractor/FeatureExtractor.cpp src/FeatureExtractor/SurfExtractor.cpp)
+target_link_libraries(aktest_FeatureExtractor aktest_mygeometry)
+target_link_libraries(aktest_FeatureExtractor ${PCL_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(aktest_FeatureExtractor opencv_calib3d opencv_core opencv_flann opencv_highgui opencv_legacy opencv_contrib opencv_features2d opencv_gpu  opencv_imgproc opencv_ml opencv_objdetect opencv_video)
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES ekz-slam
