@@ -20,7 +20,7 @@ include_directories(src)
 
 #include_directories(src/apps)
 include_directories(src/FeatureDescriptor)
-#include_directories(src/mygeometry)
+include_directories(src/mygeometry)
 #include_directories(src/FeatureExtractor)
 #include_directories(src/RGBDSegmentation)
 include_directories(src/core)
@@ -32,6 +32,11 @@ include_directories(src/core)
 
 add_library(aktest_frameinput src/core/FrameInput.cpp)
 target_link_libraries(aktest_frameinput ${OpenCV_LIBRARIES})
+
+add_library(aktest_FeatureDescriptor src/FeatureDescriptor/FeatureDescriptor.cpp src/FeatureDescriptor/SurfFeatureDescriptor64.cpp src/FeatureDescriptor/FloatHistogramFeatureDescriptor.cpp)
+
+add_library(aktest_mygeometry src/mygeometry/HasDistance.cpp src/mygeometry/Point.cpp src/mygeometry/Line.cpp src/mygeometry/Plane.cpp src/mygeometry/PlaneChain.cpp src/mygeometry/KeyPoint.cpp src/mygeometry/KeyPointChain.cpp src/mygeometry/KeyPointSet.cpp)
+target_link_libraries(aktest_mygeometry aktest_FeatureDescriptor aktest_frameinput)
 
 catkin_package(
 #  INCLUDE_DIRS include

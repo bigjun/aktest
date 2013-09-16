@@ -1,6 +1,4 @@
 #include "FeatureDescriptor.h"
-#include "SurfFeatureDescriptor64.h"
-#include "FloatHistogramFeatureDescriptor.h"
 
 FeatureDescriptor::FeatureDescriptor(){type = unitiated;};
 
@@ -13,7 +11,7 @@ inline double FeatureDescriptor::distance(FeatureDescriptor * other_descriptor)
 	if(type != other_descriptor->type){return 999999;}
 	else
 	{
-		if(type == surf64){			return ((SurfFeatureDescriptor64 * )(this))->distance
+		if(type == surf64){			return ((SurfFeatureDescriptor64 * )(this))->distance((SurfFeatureDescriptor64 * )other_descriptor);}
 		return -1;
 	}
 }
