@@ -24,10 +24,10 @@ include_directories(src/mygeometry)
 include_directories(src/FeatureExtractor)
 include_directories(src/RGBDSegmentation)
 include_directories(src/core)
-#include_directories(src/graphcutting)
-#include_directories(src/TransformationFilter)
-#include_directories(src/FrameMatcher)
-#include_directories(src/Map)
+include_directories(src/graphcutting)
+include_directories(src/TransformationFilter)
+include_directories(src/FrameMatcher)
+include_directories(src/Map)
 #include_directories(src/g2otypes)
 
 add_library(aktest_frameinput src/core/FrameInput.cpp)
@@ -46,6 +46,23 @@ target_link_libraries(aktest_FeatureExtractor opencv_calib3d opencv_core opencv_
 
 add_library(aktest_RGBDSegmentation src/RGBDSegmentation/RGBDSegmentation.cpp)
 target_link_libraries(aktest_RGBDSegmentation aktest_mygeometry)
+
+add_library(aktest_core src/core/RGBDFrame.cpp src/core/Transformation.cpp)
+target_link_libraries(aktest_core aktest_RGBDSegmentation aktest_frameinput aktest_FeatureExtractor)
+target_link_libraries(aktest_core ${catkin_LIBRARIES})
+
+add_library(aktest_graphcutting src/graphcutting/GraphForCut.cpp)
+
+add_library(aktest_TransformationFilter src/TransformationFilter/TransformationFilter.cpp src/TransformationFilter/UpdateWeightFilterv3.cpp)
+target_link_libraries(aktest_TransformationFilter aktest_core)
+
+add_library(aktest_FrameMatcher src/FrameMatcher/FrameMatcher.cpp src/FrameMatcher/AICK.cpp src/FrameMatcher/FilterMatcher.cpp src/FrameMatcher/BowAICK.cpp)
+target_link_libraries(aktest_FrameMatcher aktest_TransformationFilter)
+
+add_library(aktest_map3d src/Map/Map3D.cpp src/Map/Map3Dv2.cpp)
+target_link_libraries(aktest_map3d aktest_FrameMatcher)
+target_link_libraries(aktest_map3d ${libg2o_LIBRARIES})
+
 
 catkin_package(
 #  INCLUDE_DIRS include
