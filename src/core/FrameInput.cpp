@@ -53,7 +53,7 @@ FrameInput::FrameInput(Calibration * cal, string rgbpath, string depthpath){
 
 	cvNamedWindow("input rgb", CV_WINDOW_AUTOSIZE );
 	IplImage * img = get_rgb_img();
-	printf("img:%ld\n",(unsigned long)img);
+	//printf("img:%ld\n",(unsigned long)img);
 	cvShowImage("input rgb", img);
 	cvWaitKey(30);
 }

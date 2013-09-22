@@ -88,7 +88,7 @@ KeyPointSet * SurfExtractor::getKeyPointSet(FrameInput * fi){
 	double time = (end.tv_sec*1000000+end.tv_usec-(start.tv_sec*1000000+start.tv_usec))/1000000.0f;
 	total_time += time;
 	total_frames++;
-	printf("ipts.size(): %i\n",ipts.size());
+	//printf("ipts.size(): %i\n",ipts.size());
 	total_keypoints+=ipts.size();//keypoints->valid_key_points.size();
 	//printf("avg_time: %f avg_keypoints: %f\n",total_time/double(total_frames),double(total_keypoints)/double(total_frames));	
 	return keypoints;

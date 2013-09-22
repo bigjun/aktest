@@ -12,7 +12,7 @@ AICK::AICK()
 	
 	feature_scale = 1;
 	
-	distance_threshold = 0.01f * feature_scale;
+	distance_threshold = 0.02f;
 	feature_threshold = 0.25f;
 	shrinking = 0.8f;
 	stabilety_threshold = 0.000001f;
@@ -26,7 +26,7 @@ AICK::AICK(int max_points_)
 	
 	feature_scale = 1;
 	
-	distance_threshold = 0.005f * feature_scale;
+	distance_threshold = 0.02;
 	feature_threshold = 0.25f;
 	shrinking = 0.7f;
 	stabilety_threshold = 0.000001f;

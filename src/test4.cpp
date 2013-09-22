@@ -35,6 +35,10 @@
 #include <dirent.h>
 #include <errno.h>
 
+#include "UpdateWeightFilterv4.cpp"
+#include "MultiTypeMatcher.cpp"
+#include "Map3Dv3.cpp"
+
 using namespace std;
 
 int counter = 0;
@@ -65,18 +69,26 @@ int main(int argc, char **argv)
 	cal->scale		= 1000*16*(4.0/5.0);
 	cal->words 		= words;
 
-	FilterMatcher * fm1 = new FilterMatcher(new AICK(),0);
-	fm1->addFilter(new UpdateWeightFilterv3(), 00.80);
+	MultiTypeMatcher * mtm = new MultiTypeMatcher();
+	mtm->addMatcher(new AICK(99999999,30,0.8,0.005,0.25));
+	mtm->addMatcher(new AICK(99999999,30,0.8,0.01,0.25));
+	mtm->addMatcher(new AICK(99999999,30,0.8,0.015,0.25));
+	mtm->addMatcher(new AICK(99999999,30,0.8,0.02,0.25));
+	mtm->addMatcher(new AICK(99999999,30,0.8,0.05,0.25));
+	mtm->setFilter(new UpdateWeightFilterv4());
 
-	FilterMatcher * fm2 = new FilterMatcher(new AICK(),100);
-	fm2->addFilter(new UpdateWeightFilterv3(), 10.95);
+	FilterMatcher * fm1 = new FilterMatcher(new AICK(),4);
+	fm1->addFilter(new UpdateWeightFilterv4(), 100);
+
+	FilterMatcher * fm2 = new FilterMatcher(new AICK(300,7,0.5,0.02,0.25),20);
+	fm2->addFilter(new UpdateWeightFilterv4(), 175);
 
 	//FilterMatcher * fm1 = new FilterMatcher(new BowAICK(800, 10, 0.4,0.28, 0.08,0.25),0);
 	//fm1->addFilter(new UpdateWeightFilterv3(), 00.80);
 	//FilterMatcher * fm2 = new FilterMatcher(new BowAICK(800, 10, 0.4,0.28, 0.07,0.25),100);
 	//fm2->addFilter(new UpdateWeightFilterv3(), 10.95);
 
-	m = new Map3D();
+	m = new Map3Dv3();
 
 	m->matcher 				    = fm1;
 	m->loopclosure_matcher 		= fm2;
@@ -88,12 +100,12 @@ int main(int argc, char **argv)
 
 	int missing = 0;
 	int i;
-	for(i = 170; i <= 250 && true ; i+=1){
+	for(i = 170; i <= 850 && true ; i+=1){
 		char rgbbuf[512];
 		char depthbuf[512];
 		sprintf(rgbbuf,"%s/RGB%.10i.png",input.c_str(),i+1);
 		sprintf(depthbuf,"%s/Depth%.10i.png",input.c_str(),i+1);
-		printf("adding %s\n",rgbbuf);
+		//printf("adding %s\n",rgbbuf);
 		FrameInput * fi = new FrameInput(cal, string(rgbbuf) , string(depthbuf));
 		if(fi->rgb_img == 0 || fi->depth_img == 0 ){
 			missing++;
